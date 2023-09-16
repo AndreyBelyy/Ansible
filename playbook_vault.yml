@@ -1,0 +1,110 @@
+---
+- name: Ansible Create user functionlity module demo
+  hosts: stapp01 # Defining the remote server inventory host groupss
+  # Defining the remote server where the ansible create user module
+  # will manage the objects
+  become: yes # Using Remote user as ubuntu
+  vars:
+    admin_password: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      31653863626334343137336237323030376137306232636137383334333933323036656139373036
+      3963363539346637613736376365656435353735316439380a666632313962663835356139623466
+      31333361393934393864346563353332666537333863396632353235656436633330313366393331
+      6633653035643563350a303964643533663265386232363835346265326165316361393565333832
+      34313730636132643833306239353334633339623466396664633730633065353937323163623163
+      61363930663662613635313930336530396638373531663235333833356231353832653437333735
+      37366130386265636434326665313234313630343736363331326664366538623165343965343563
+      39623833373631313431663362303334616530383232393930386333616562313966643234336535
+      64366135653737663135616266383037333965353039643162616164656161666238
+    dev_password: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      61373732313862633463623930396338323336396464393836313466303837393565666137616633
+      3761336463613831323839613231666666613766666639630a363838376366313637613132363362
+      33643163353166306336346532353838323065626666393861653861636563316564623262313361
+      6436313963626163330a656162373434303538326565393731333933353535656538616462633663
+      39383463653638613563343936353831623165303364653936353930656332373638353133393563
+      62646636623562323862383765306632326564656266643134626562616534383434613634343263
+      33316132613431353337363930643533343162353834656435303164656131633536353131613038
+      62343330326234623839663234663233313632373265333433643232336461623634353132333436
+      36303363646534383364333034623934663363353064636263376431363731376539
+  tasks:
+    - name: Add groupss "developers" to remote node
+      group:
+        name: developers
+        gid: 2213
+        state: present
+
+    - name: Add groups "admins" to remote node
+      group:
+        name: admins
+        gid: 2212
+        state: present
+    # Creating the user Rob
+    - name: rob
+      ansible.builtin.user:
+        name: rob
+        comment: rob
+        uid: 1050
+        groups: admins, wheel
+        password: "$6$Y/zciZLmp/Zn2T85$tJXlvTcyv0sQLe2nFngTJme0uqrtYRu./8X/1Ibszn7V3ltwryNKZKJ0uPS/PZCba1To.YAf686tmrUd9xkkr/"
+        createhome: yes # Defaults to yes
+        home: /home/rob # Defaults to /home/<username>
+    # Creating the user david
+    - name: david
+      ansible.builtin.user:
+        name: david
+        comment: david
+        uid: 1051
+        groups: admins, wheel
+        password: "$6$Y/zciZLmp/Zn2T85$tJXlvTcyv0sQLe2nFngTJme0uqrtYRu./8X/1Ibszn7V3ltwryNKZKJ0uPS/PZCba1To.YAf686tmrUd9xkkr/"
+        createhome: yes # Defaults to yes
+        home: /home/david # Defaults to /home/<username>
+    # Creating the user david
+    - name: joy
+      ansible.builtin.user:
+        name: joy
+        comment: joy
+        uid: 1052
+        groups: admins, wheel
+        password: "$6$Y/zciZLmp/Zn2T85$tJXlvTcyv0sQLe2nFngTJme0uqrtYRu./8X/1Ibszn7V3ltwryNKZKJ0uPS/PZCba1To.YAf686tmrUd9xkkr/"
+        createhome: yes # Defaults to yes
+        home: /home/joy # Defaults to /home/<username>
+
+    # Developers team
+    - name: tim
+      ansible.builtin.user:
+        name: tim
+        comment: tim
+        uid: 1053
+        groups: developers
+        password: "$6$a6PSViUy33T5kIFK$ONqJBrlitABulufFx.abNKajJPaS.cl2GgLKtlfB1FKtH6Z48yXXDrMUmliXYHYvuyHv3kAe/VIKxRFpx0F4t/"
+        createhome: yes # Defaults to yes
+        home: /var/www/tim # Defaults to /home/<username>
+      vars:
+    - name: ray
+      ansible.builtin.user:
+        name: ray
+        comment: ray
+        uid: 1054
+        groups: developers
+        password: "$6$a6PSViUy33T5kIFK$ONqJBrlitABulufFx.abNKajJPaS.cl2GgLKtlfB1FKtH6Z48yXXDrMUmliXYHYvuyHv3kAe/VIKxRFpx0F4t/"
+        createhome: yes # Defaults to yes
+        home: /var/www/ray # Defaults to /home/<username>
+    - name: jim
+      ansible.builtin.user:
+        name: jim
+        comment: jim
+        uid: 1055
+        groups: developers
+        password: "$6$a6PSViUy33T5kIFK$ONqJBrlitABulufFx.abNKajJPaS.cl2GgLKtlfB1FKtH6Z48yXXDrMUmliXYHYvuyHv3kAe/VIKxRFpx0F4t/"
+        createhome: yes # Defaults to yes
+        home: /var/www/jim # Defaults to /home/<username>
+    - name: mark
+      ansible.builtin.user:
+        name: mark
+        comment: mark
+        uid: 1056
+        groups: developers
+        password: "$6$a6PSViUy33T5kIFK$ONqJBrlitABulufFx.abNKajJPaS.cl2GgLKtlfB1FKtH6Z48yXXDrMUmliXYHYvuyHv3kAe/VIKxRFpx0F4t/"
+        createhome: yes # Defaults to yes
+        home: /var/www/mark # Defaults to /home/<username>
